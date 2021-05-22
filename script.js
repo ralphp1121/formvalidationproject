@@ -4,6 +4,7 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('password2');
 
+
 //Show input error message
 function showError(input, message) {
     const formControl = input.parentElement;
@@ -24,10 +25,30 @@ function isValidEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+
+//Check required fields
+function checkRequired(inputArr) {
+    inputArr.forEach(function(input) {
+        if(input.value.trim() === '') {
+            showError(input, `${getFieldName(input)} is required`);
+        } 
+        else {
+            showSuccess(input);
+        }
+    });
+}
+
+//Get fieldname and uppercase
+function getFieldName(input) {
+    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 //Event listeners
 form.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
+    checkRequired([username, email, password, password2]);
+/*    
     if (username.value == '') {
         showError(username, 'Username is required');
     } 
@@ -55,4 +76,5 @@ form.addEventListener('submit', function(e) {
     else {
         showSuccess(password2);
     }
+*/
 })
